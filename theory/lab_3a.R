@@ -15,7 +15,7 @@ dim(distinct(gapminder))
 # removes exponent in graph
 options(scipen=1000)
 
-# scatterplots Note: scalel_x_log10() --> gives gap in x coordinate
+# scatter plots Note: scalel_x_log10() --> gives gap in x coordinate
 ggplot(gapminder, aes(x=gdpPercap, y=lifeExp)) + geom_point(aes(colour=continent)) + scale_x_log10()
 
 

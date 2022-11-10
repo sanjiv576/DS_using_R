@@ -1,8 +1,9 @@
 #------------------------- LAB 3 SECTION C ---------------------------
 
 # install.packages("nycflights13")
-
+install.packages("dplyr")
 library(tidyverse)
+library("dplyr")
 library(nycflights13)
 
 # dim ---> shows data in rows and columns i.e matrix form
@@ -12,8 +13,9 @@ flights
 view(flights)
 
 # extracting columns
+colnames(flights)
 names(flights)
-select(flights, year, month, day)
+select(flights, carrier, year, month, day, dest)
 select(flights, year:day)
 select(flights, -year)
 select(flights, -(year:day))
@@ -41,8 +43,22 @@ sat
 summary(sat)
 typeof(sat)
 
-# rename columns
-rename(flights, dis=distance, tail_num=tailnum)
+colnames(flights)
+# rename columns by installing dplyr package
+
+  rename(flights, "tail_num" = "tailnum");   # Note: this doesnt work
+
+
+# alternate way of renaming using index without installing dplyr
+
+# first, get the index number
+indexNum = grep("dest", colnames(flights))
+# second, change the column name
+colnames(flights)[indexNum] = "destination"
+
+colnames(flights);
+
+
 
 # add columns
 # mutate ---> add new columns and also store the data
@@ -69,8 +85,11 @@ filter(flights, month==1, day==1)
 
 
 set.seed(123)
+# here, 20 ==> 20 random rows
 sample_n(flights, 20)
-0.001*nrow(flights) # how many rows expected if 0.1% of the rows
+
+# get random rows data in fraction
+0.001*nrow(flights) # how many rows expected if 0.01% of the rows
 sample_frac(flights, 0.001)
 
 

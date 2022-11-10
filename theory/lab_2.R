@@ -23,9 +23,11 @@ data
 ggplot(data, aes(y=male_share)) +
   geom_boxplot()
 
-View(arrange(data, gap))
-
-
+view(arrange(data,gap))
+summary(data)
+nrow(distinct(data))
+ncol(data)
+dim(data)
 # for practice
 
 library(tidyverse)
