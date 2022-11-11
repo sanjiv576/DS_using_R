@@ -30,7 +30,7 @@ flights %>% # start with the flights
   group_by(carrier) %>% # group by airline (carrier)
   summarise(num_delay=n()) %>% # count the observations
   left_join(airlines,by="carrier") %>% # join by common key
-  filter(num_delay==max(num_delay)) %>% # find most delayed
+  filter(num_delay == max(num_delay)) %>% # find most delayed
   select(name)
   
 
@@ -74,12 +74,43 @@ seattle %>%
 
 #   (b) Which city was flown to with the highest average speed?    
 
-flights %>% 
-  group_by(origin) %>% 
-  mutate(speed=distance/(air_time/60))
-
-view(flights)
 colnames(flights)
 
+new_flights = mutate(flights, speed=(distance/(arr_time/60)))
+colnames(new_flights)
+view(new_flights)
 
+new_flights %>% 
+  filter(speed > 0) %>% 
+  group_by(dest) %>% 
+  summarise(mean_speed=mean(speed)) %>% 
+  filter(mean_speed==max(mean_speed)) %>% 
+  left_join(flights, by="dest") %>% 
+  select(dest)
+  
+
+
+
+
+library(tidyverse)
+summary(diamonds)
+
+# (a) Write a dplyr pipe that produces a summary table showing for each cut of diamond 
+# the number of diamonds of that cut and the correlation coefficient of carat and price.
+
+diamonds %>% 
+  select(cut) %>% 
+  summary() %>% 
+  
+
+# (b) Write a dplyr pipe to determine what color of diamond has the highest mean of price per carat 
+# among diamonds with Ideal cut.
+new_diamonds = mutate(diamonds, price_carat = (price/carat))
+colnames(new_diamonds)
+new_diamonds %>% 
+  filter(price_carat > 0) %>% 
+  group_by(color) %>% 
+  summarise(mean_price_carat = mean(price_carat)) %>% 
+  filter(mean_price_carat == max(mean_price_carat)) %>% 
+  select(color)
 
