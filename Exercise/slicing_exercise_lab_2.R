@@ -8,10 +8,10 @@ colnames(flights)
 # Questions: find all flights (rows) that : 
 # (a) Departed between midnight and 6am (inclusive).
 
-# Note: this might be wrong answer
+
 
 specificCol = select(flights, flight, carrier, dep_time)
-filter(specificCol, dep_time <= 6)
+filter(specificCol, (dep_time >= 100 & dep_time <= 600))
 
 # (b) Had an arrival delay of two or more hours.
 
